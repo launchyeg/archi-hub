@@ -10,10 +10,10 @@ export default function Footer() {
   const [year] = useState(() => new Date().getFullYear());
 
   return (
-    <footer className="border-t border-line bg-ground px-4 py-8 sm:px-6">
-      <div className="mx-auto flex max-w-[1280px] flex-col items-center gap-6 sm:flex-row sm:justify-between">
+    <footer className="border-t border-line bg-ground">
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center gap-6 px-4 py-8 sm:flex-row sm:justify-between sm:px-6">
         <Link to="/" aria-label="Archi Hub home">
-          <img src="/archihub-logo-horizontal.png" alt="Archi Hub" className="h-8 w-auto" />
+          <img src="/archihub-logo-horizontal.png" alt="Archi Hub" className="h-14 w-auto" />
         </Link>
 
         <nav aria-label="Footer" className="flex gap-6">

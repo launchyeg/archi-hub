@@ -16,6 +16,9 @@ function linkClasses({ isActive }) {
   }`;
 }
 
+const ctaClasses =
+  'items-center justify-center rounded-[2px] bg-amber px-4 py-2 text-sm font-semibold text-ground transition-opacity hover:opacity-90';
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const [open, setOpen] = useState(false);
@@ -39,12 +42,12 @@ export default function Navbar() {
         scrolled ? 'border-line bg-ground' : 'border-transparent bg-transparent'
       }`}
     >
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-3 sm:px-6">
-        <NavLink to="/" aria-label="Archi Hub home" className="flex shrink-0 items-center">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6">
+       <NavLink to="/" aria-label="Archi Hub home" className="flex shrink-0 items-center">
           <img
             src="/archihub-logo-horizontal.png"
             alt="Archi Hub"
-            className="hidden h-10 w-auto sm:block"
+            className="hidden h-12 w-auto sm:block"
           />
           <img src="/archihub-mark.png" alt="Archi Hub" className="h-9 w-auto sm:hidden" />
         </NavLink>
@@ -57,27 +60,33 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <button
-          type="button"
-          className="flex h-10 w-10 items-center justify-center border border-line text-ink sm:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span className="relative block h-3 w-5">
-            <span
-              className={`absolute inset-x-0 top-0 h-px bg-current transition-transform duration-200 ${
-                open ? 'translate-y-1.5 rotate-45' : ''
-              }`}
-            />
-            <span
-              className={`absolute inset-x-0 bottom-0 h-px bg-current transition-transform duration-200 ${
-                open ? '-translate-y-1.5 -rotate-45' : ''
-              }`}
-            />
-          </span>
-        </button>
+        <div className="flex items-center gap-4">
+          <NavLink to="/lab" className={`hidden sm:inline-flex ${ctaClasses}`}>
+            Try the software
+          </NavLink>
+
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center border border-line text-ink sm:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span className="relative block h-3 w-5">
+              <span
+                className={`absolute inset-x-0 top-0 h-px bg-current transition-transform duration-200 ${
+                  open ? 'translate-y-1.5 rotate-45' : ''
+                }`}
+              />
+              <span
+                className={`absolute inset-x-0 bottom-0 h-px bg-current transition-transform duration-200 ${
+                  open ? '-translate-y-1.5 -rotate-45' : ''
+                }`}
+              />
+            </span>
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -94,6 +103,11 @@ export default function Navbar() {
                 </NavLink>
               </li>
             ))}
+            <li>
+              <NavLink to="/lab" className={`flex ${ctaClasses}`}>
+                Try the software
+              </NavLink>
+            </li>
           </ul>
         </nav>
       )}
