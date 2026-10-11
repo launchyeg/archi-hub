@@ -1,0 +1,64 @@
+/* Design tokens copied from DESIGN.md. Do not invent values outside this file. */
+
+@theme {
+  --color-ground: #081832;
+  --color-ground-raised: #0e2244;
+  --color-line: #1c3358;
+  --color-line-strong: #2b4670;
+  --color-ink: #eaf0f8;
+  --color-ink-dim: #9fb0c8;
+  --color-gold: #b89848;
+  --color-gold-bright: #f0c878;
+  --color-amber: #f0b060;
+  --color-signal: #4fd1e8;
+  --color-ok: #5bd38b;
+  --color-error: #ff7b72;
+
+  --font-sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+:root {
+  /* Color — same tokens as above, under the names DESIGN.md uses in prose and for non-Tailwind CSS */
+  --ground: var(--color-ground);
+  --ground-raised: var(--color-ground-raised);
+  --line: var(--color-line);
+  --line-strong: var(--color-line-strong);
+  --ink: var(--color-ink);
+  --ink-dim: var(--color-ink-dim);
+  --gold: var(--color-gold);
+  --gold-bright: var(--color-gold-bright);
+  --amber: var(--color-amber);
+  --signal: var(--color-signal);
+  --ok: var(--color-ok);
+  --error: var(--color-error);
+
+  /* Type scale (px) */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 20px;
+  --text-lg: 28px;
+  --text-xl: 40px;
+  --text-2xl: 64px;
+  --text-3xl: 96px;
+
+  /* Spacing scale (px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 160px;
+
+  /* Layout */
+  --content-max: 1280px;
+  --gutter: 24px;
+  --radius: 2px;
+
+  /* Motion */
+  --ease-out-standard: cubic-bezier(0.22, 1, 0.36, 1);
+}
