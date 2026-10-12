@@ -17,7 +17,7 @@ function linkClasses({ isActive }) {
 }
 
 const ctaClasses =
-  'items-center justify-center rounded-[2px] bg-amber px-4 py-2 text-sm font-semibold text-ground transition-opacity hover:opacity-90';
+  'items-center justify-center rounded-[2px] border border-gold px-4 py-2 text-sm font-semibold text-gold transition-colors hover:border-gold-bright hover:text-gold-bright';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
@@ -42,14 +42,14 @@ export default function Navbar() {
         scrolled ? 'border-line bg-ground' : 'border-transparent bg-transparent'
       }`}
     >
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6">
-       <NavLink to="/" aria-label="Archi Hub home" className="flex shrink-0 items-center">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6 sm:py-2">
+        <NavLink to="/" className="flex shrink-0 items-center">
           <img
             src="/archihub-logo-horizontal.png"
             alt="Archi Hub"
             className="hidden h-12 w-auto sm:block"
           />
-          <img src="/archihub-mark.png" alt="Archi Hub" className="h-9 w-auto sm:hidden" />
+          <img src="/archihub-mark.png" alt="Archi Hub" className="h-10 w-auto sm:hidden" />
         </NavLink>
 
         <nav className="hidden items-center gap-6 sm:flex" aria-label="Primary">

@@ -8,6 +8,7 @@ import CaseStudy from './pages/CaseStudy.jsx';
 import Home from './pages/Home.jsx';
 import Journal from './pages/Journal.jsx';
 import Lab from './pages/Lab.jsx';
+import LeadFormPreview from './pages/LeadFormPreview.jsx';
 import Legal from './pages/Legal.jsx';
 import Method from './pages/Method.jsx';
 import Studio from './pages/Studio.jsx';
@@ -28,6 +29,7 @@ function App() {
           <Route path="/journal" element={<Journal />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/legal" element={<Legal />} />
+          {import.meta.env.DEV && <Route path="/dev/lead-form" element={<LeadFormPreview />} />}
         </Routes>
       </div>
       <Footer />

@@ -14,6 +14,17 @@
 
 html {
   color-scheme: dark;
+  scrollbar-color: var(--line-strong) var(--ground);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ground);
+}
+
+input,
+textarea {
+  caret-color: var(--gold-bright);
 }
 
 body {
