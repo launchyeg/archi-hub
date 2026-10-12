@@ -14,7 +14,7 @@ const OPTIONS = [
 export default function NeedChoice({ registration, error }) {
   return (
     <fieldset aria-describedby={error ? 'need-error' : undefined}>
-      <legend className="mb-4 text-xl font-bold text-ink">What do you need?</legend>
+      <legend className="mb-4 text-lg font-bold text-ink">What do you need?</legend>
 
       <div className="grid gap-3 sm:grid-cols-2">
         {OPTIONS.map((option) => (

@@ -11,7 +11,7 @@ export default function LeadFormSuccess({ lead, onReset }) {
 
   return (
     <div role="status" className="flex flex-col items-start gap-4 border-t border-ok pt-6">
-      <h3 ref={headingRef} tabIndex={-1} className="text-xl font-bold text-ink">
+      <h3 ref={headingRef} tabIndex={-1} className="text-lg font-bold text-ink">
         {isDownload ? 'Check your inbox' : 'Thanks, your question is in'}
       </h3>
       <p className="max-w-[65ch] text-ink-dim">

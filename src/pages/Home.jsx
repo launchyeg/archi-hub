@@ -1,7 +1,15 @@
+import FeaturedProject from '../components/FeaturedProject.jsx';
+import HomeHero from '../components/HomeHero.jsx';
+import StartProjectBand from '../components/StartProjectBand.jsx';
+import TrustStrip from '../components/TrustStrip.jsx';
+
 export default function Home() {
   return (
-    <main className="mx-auto max-w-[1280px] px-4 py-24 sm:px-6">
-      <h1 className="text-[length:var(--text-xl)] font-extrabold text-ink">Home</h1>
+    <main>
+      <HomeHero />
+      <FeaturedProject />
+      <TrustStrip />
+      <StartProjectBand />
     </main>
   );
 }

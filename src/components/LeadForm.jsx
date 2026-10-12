@@ -142,8 +142,8 @@ export default function LeadForm({ defaultType, defaultProgram = '', idPrefix = 
         <p className="text-sm text-ink-dim">
           See how we handle your details in our{' '}
           <Link
-            to="/legal#privacy"
-            className="text-gold underline underline-offset-4 transition-colors hover:text-gold-bright"
+            to="/legal"
+            className="rounded-[2px] text-gold underline underline-offset-4 transition-colors hover:text-gold-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
           >
             privacy notice
           </Link>
