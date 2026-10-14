@@ -12,7 +12,7 @@ const SUBMIT_LABELS = {
   inquiry: 'Send my question',
 };
 
-export default function LeadForm({ defaultType, defaultProgram = '', idPrefix = 'lead' }) {
+export default function LeadForm({ defaultType, defaultProgram = '', idPrefix = 'lead', pill = false }) {
   const [submittedLead, setSubmittedLead] = useState(null);
   const [submitError, setSubmitError] = useState('');
 
@@ -135,7 +135,7 @@ export default function LeadForm({ defaultType, defaultProgram = '', idPrefix = 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center justify-center rounded-[2px] bg-amber px-6 py-3 font-semibold text-ground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className={`inline-flex items-center justify-center ${pill ? 'rounded-full' : 'rounded-[2px]'} bg-amber px-6 py-3 font-semibold text-ground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60`}
         >
           {isSubmitting ? 'Sending…' : (SUBMIT_LABELS[type] ?? 'Send')}
         </button>

@@ -16,6 +16,11 @@
 
   --font-sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  /* Home only: light serif display face, 40px and above */
+  --font-serif: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+
+  /* Home only: 24px card and image radius */
+  --radius-card: 24px;
 
   /* Type scale (px) from DESIGN.md, mapped onto Tailwind's text-* names */
   --text-xs: 12px;
