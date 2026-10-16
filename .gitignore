@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Added
+.env
+.env.*
+.vercel
+coverage
+.claude/settings.local.json

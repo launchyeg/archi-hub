@@ -8,6 +8,9 @@ The site has one job: prove the AI is real, then turn visitors into leads.
 
 - `DESIGN.md` for colors, type, spacing, components and motion. Do not invent UI values outside it.
 - `PRODUCT.md` (created by `/impeccable init`) for audience, tone and constraints.
+- `docs/SITEMAP.md` for the approved page structure and numbering.
+- `docs/HERO.md` before touching the Home hero or any scroll video.
+- `docs/OPEN-ITEMS.md` for what is still unconfirmed. Never invent an answer to an open item.
 
 ## Stack
 
@@ -25,7 +28,8 @@ Commands: `npm run dev`, `npm run build`, `npm run lint`
 ```
 src/
   pages/        Home, Method, CaseStudies, CaseStudy, Lab, Studio, Journal, Careers, Legal
-  components/   Navbar, Footer, LeadForm, and shared pieces
+  components/   Navbar, Footer, SmoothScroll, and shared pieces. One file per component
+  lib/          helpers (submitLead.js comes later with the forms)
   styles/       tokens.css, global.css
   content/      project, software and team data as plain JS or JSON, not hard-coded in JSX
   App.jsx       routes
@@ -52,16 +56,11 @@ The programs are desktop software. They cannot run inside the browser. So the La
 
 A web-based mini simulator for one tool is a possible later phase, not part of the first launch.
 
-## Lead capture
+## Lead capture (deferred)
 
-One shared `LeadForm` component is used on every page that needs it. First question: "What do you need?"
+**No forms for now.** Do not build `LeadForm`, `submitLead.js` or any input field until the user says so. Where a section needs a form later (Home Contact, Lab download), show a clearly labeled placeholder block instead.
 
-- **Try the software** asks for name, email, and optionally company and which program. Success state: confirm that a download link is on its way by email.
-- **I have a question** adds a message field and project details. This is a hot lead.
-
-Each submission carries a `type` of `download` or `inquiry`. The backend is not chosen yet, so submit through a single function in `src/lib/submitLead.js` that currently logs and resolves. Do not scatter submit logic across components.
-
-A privacy notice link must appear next to the form, and the Legal page needs a real privacy policy before launch.
+When the forms are built, the plan is: one shared `LeadForm`, first question "What do you need?" with `download` (name, email, optional company and program) or `inquiry` (adds message and project details). Every submission carries a `type`, and all submit logic lives in one function in `src/lib/submitLead.js`. A privacy notice link must sit next to the form.
 
 ## Working rules
 
@@ -72,23 +71,39 @@ A privacy notice link must appear next to the form, and the Legal page needs a r
 - No lorem ipsum. If real content is missing, use clearly labeled placeholder data in `src/content/`.
 - Keep components small. One file per component.
 - Do not add dependencies without saying why.
+- No invented numbers, claims or testimonials. Only "5 stages" is real. Anything else is a clearly labeled PLACEHOLDER in `src/content/`.
+- Work only on the page and section the user names in the current message. Do not start other pages or sections.
+
+## Animation rules
+
+One library per element, never two.
+- **GSAP + ScrollTrigger**: anything driven by scroll position (hero scroll video, pinned or scrubbed sections).
+- **motion**: everything else (blur-in text reveals, hover, FAQ open and close, route transitions).
+- **CSS**: the testimonials marquee.
+- **Lenis** is the only smooth scroll. Connect it to ScrollTrigger once, in one file: `lenis.on('scroll', ScrollTrigger.update)` and drive `lenis.raf` from `gsap.ticker`, with `gsap.ticker.lagSmoothing(0)`.
+- In React, create GSAP animations inside `useGSAP` or `gsap.context()` and clean up on unmount. Register plugins once.
+- Animate `transform` and `opacity` only. Never animate layout properties.
+- `prefers-reduced-motion`: no scrub, no reveal. The hero shows the end poster.
 
 ## Skills
 
 Installed from the project root:
 - Impeccable (`npx impeccable install`). Use `/impeccable shape` before building a page, `/impeccable craft` to build it, then `critique`, `audit` and `polish`.
-- Emil Kowalski skills (`npx skills@latest add emilkowalski/skills`) for animation. Run `review-animations` before finishing any page with motion.
+- Emil Kowalski skills, kept: `emil-design-eng`, `animate`, `animation-performance`, `review-animations`. Run `review-animations` before finishing any page with motion.
+- GSAP skills, kept: `gsap-core`, `gsap-timeline`, `gsap-scrolltrigger`, `gsap-react`, `gsap-performance`.
+- Removed on purpose: `apple-design` (conflicts with `DESIGN.md`), `animation-vocabulary`, `gsap-plugins`, `gsap-utils`, `gsap-frameworks`. Do not reinstall them.
 
-## Order of work
+## Page numbering
 
-1. Project scaffold, tokens, fonts, Navbar, Footer, routes with empty pages
-2. LeadForm and `submitLead`
-3. Home
-4. Intelligence Lab
-5. The Method
-6. Case Studies
-7. Studio, Journal, Careers, Legal
-8. Motion pass, audit, polish
+Home is 01, The Method 02, Case Studies 03, Intelligence Lab 04, Studio 05, Journal, Careers and Legal 06. See `docs/SITEMAP.md`.
+
+## How we work
+
+The user builds one page at a time, and inside a page one section at a time. Sections do not have to follow page order. Every page already exists as an empty route, so a new section only fills its page.
+
+For each piece: `/impeccable shape` first, then build, then `critique` and `polish`. Run `review-animations` before finishing anything with motion. After each finished part, give the user a short commit message.
+
+Current focus: **Home**.
 
 ## Open questions
 
@@ -97,4 +112,4 @@ Installed from the project root:
 - Which programs go in the Lab first, and whether screen recordings exist
 - Real case studies and their data
 - Where leads should be sent: email only, Google Sheet, or a CRM
-- Domain and who manages hosting
+- Domain. Hosting is automatic: Vercel deploys from GitHub on every push, so only push working code
