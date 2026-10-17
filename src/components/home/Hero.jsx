@@ -70,9 +70,20 @@ export default function Hero() {
       cleanup = () => ctx.revert();
     };
 
-    video.pause();
+    // Mobile browsers (iOS Safari, Low Power Mode, data saver) skip preload and
+    // never decode a frame until the video has played once. Prime it with a muted
+    // play/pause, and listen to several events instead of loadedmetadata alone.
+    const prime = () => {
+      const p = video.play();
+      if (p && p.then) p.then(() => video.pause()).catch(() => {});
+      else video.pause();
+    };
+    const events = ["loadedmetadata", "loadeddata", "canplay"];
+    events.forEach((e) => video.addEventListener(e, start));
+    window.addEventListener("touchstart", prime, { once: true, passive: true });
+    video.load();
+    prime();
     if (video.readyState >= 1) start();
-    else video.addEventListener("loadedmetadata", start, { once: true });
 
     // If the video is not ready after 4s, the ground stays visible.
     const timeout = window.setTimeout(() => {
@@ -81,7 +92,8 @@ export default function Hero() {
 
     return () => {
       window.clearTimeout(timeout);
-      video.removeEventListener("loadedmetadata", start);
+      events.forEach((e) => video.removeEventListener(e, start));
+      window.removeEventListener("touchstart", prime);
       cleanup();
     };
   }, [src, reduced]);
@@ -125,7 +137,7 @@ export default function Hero() {
         <div className="absolute inset-x-0 bottom-0 mx-auto flex max-w-[1280px] flex-col gap-8 px-4 pb-12 sm:px-6 md:flex-row md:items-end md:justify-between md:pb-16">
           <div className="flex flex-col items-start gap-6">
             <motion.p
-              className="inline-flex items-center gap-2 rounded-full border border-[#ffdaa41f] bg-[radial-gradient(circle_farthest-corner_at_50%_50%,color-mix(in_srgb,var(--color-ink)_5%,transparent),color-mix(in_srgb,var(--color-ink)_20%,transparent))] px-[18px] py-2.5 text-sm text-ink backdrop-blur-xs"
+              className="inline-flex items-center gap-2 rounded-full border border-[#ffdaa41f] bg-[radial-gradient(circle_farthest-corner_at_50%_50%,color-mix(in_srgb,var(--color-ink)_5%,transparent),color-mix(in_srgb,var(--color-ink)_20%,transparent))] px-4 py-2 text-sm text-ink backdrop-blur-xs"
               {...reveal(0)}
             >
               <span
@@ -142,13 +154,13 @@ export default function Hero() {
             <motion.div className="flex flex-wrap gap-3" {...reveal(3)}>
               <Link
                 to="/method"
-                className="inline-flex items-center gap-2 rounded-full bg-amber px-6 py-3 text-sm font-medium text-ground"
+                className="inline-flex items-center gap-2 rounded-full bg-amber px-5 py-2.5 text-sm font-medium text-ground"
               >
                 See the method
               </Link>
               <Link
                 to="/studio"
-                className="inline-flex items-center gap-2 rounded-full border border-ink/12 bg-ground/60 px-6 py-3 text-sm font-medium text-ink supports-[backdrop-filter]:backdrop-blur-[16px]"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/12 bg-ground/60 px-5 py-2.5 text-sm font-medium text-ink supports-[backdrop-filter]:backdrop-blur-[16px]"
               >
                 Contact us
               </Link>
