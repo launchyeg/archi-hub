@@ -19,6 +19,10 @@
   /* Home only: light serif display face, 40px and above */
   --font-serif: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
 
+  /* Home hero only: clean sans for the headline and a script face for the accent word */
+  --font-hero: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-script: 'Playball', 'Brush Script MT', cursive;
+
   /* Home only: 24px card and image radius */
   --radius-card: 24px;
 

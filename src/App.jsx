@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import Navbar from './components/layout/Navbar.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
 import CaseStudies from './pages/CaseStudies.jsx';
 import Careers from './pages/Careers.jsx';
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <SmoothScroll />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/method" element={<Method />} />
