@@ -40,7 +40,7 @@ export default function WhyUs() {
   }, []);
 
   return (
-    <section className="bg-ground py-24 md:py-40" aria-labelledby="why-us">
+    <section className="bg-ground" aria-labelledby="why-us">
       <div className="mx-auto grid max-w-[1280px] gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-16">
         <div>
           <h2

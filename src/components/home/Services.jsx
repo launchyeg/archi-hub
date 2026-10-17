@@ -107,7 +107,7 @@ export default function Services() {
       : {};
 
   return (
-    <section ref={sectionRef} className="bg-ground py-24 md:py-40" aria-labelledby="services-title">
+    <section ref={sectionRef} className="bg-ground" aria-labelledby="services-title">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
         <h2
           id="services-title"

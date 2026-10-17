@@ -8,7 +8,7 @@ const INTERVAL_MS = 3000;
 export default function Showcase() {
   // Images live in public/images/. Alt text is generic until the projects are named.
   const images = [1, 2, 3, 4].map((n) => ({
-    src: `/images/showcase${n}.jpeg`,
+    src: `/images/showcase/showcase${n}.jpeg`,
     alt: `Archi Hub project, view ${n}`,
   }));
 
