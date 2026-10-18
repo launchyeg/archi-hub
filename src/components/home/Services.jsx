@@ -15,9 +15,18 @@ export default function Services() {
       name: "Residential",
       line: "Villas, townhouses and apartment buildings.",
       images: [
-        { src: "/images/services/residential-1.jpg", alt: "Brick townhouses with arched balconies, street view" },
-        { src: "/images/services/residential-2.jpg", alt: "Classical apartment facade with ornate balconies" },
-        { src: "/images/services/residential-3.jpg", alt: "Residential courtyard with a pool at dusk" },
+        {
+          src: "/images/services/residential-1.jpg",
+          alt: "Brick townhouses with arched balconies, street view",
+        },
+        {
+          src: "/images/services/residential-2.jpg",
+          alt: "Classical apartment facade with ornate balconies",
+        },
+        {
+          src: "/images/services/residential-3.jpg",
+          alt: "Residential courtyard with a pool at dusk",
+        },
       ],
     },
     {
@@ -25,9 +34,18 @@ export default function Services() {
       name: "Hospitality",
       line: "Hotels, motels and resort residences.",
       images: [
-        { src: "/images/services/hospitality-1.jpg", alt: "Resort pool courtyard in daylight" },
-        { src: "/images/services/hospitality-2.jpg", alt: "Resort pool courtyard at night" },
-        { src: "/images/services/hospitality-3.jpg", alt: "Four-storey motel facade at dusk" },
+        {
+          src: "/images/services/hospitality-1.jpg",
+          alt: "Resort pool courtyard in daylight",
+        },
+        {
+          src: "/images/services/hospitality-2.jpg",
+          alt: "Resort pool courtyard at night",
+        },
+        {
+          src: "/images/services/hospitality-3.jpg",
+          alt: "Four-storey motel facade at dusk",
+        },
       ],
     },
     {
@@ -35,9 +53,18 @@ export default function Services() {
       name: "Commercial",
       line: "Malls, retail streets and restaurant fronts.",
       images: [
-        { src: "/images/services/commercial-1.jpg", alt: "Shopping mall facade with sculpted fins" },
-        { src: "/images/services/commercial-2.jpg", alt: "Retail street with arched shopfronts at dusk" },
-        { src: "/images/services/commercial-3.jpg", alt: "Restaurant entrance with a shell-shaped canopy at night" },
+        {
+          src: "/images/services/commercial-1.jpg",
+          alt: "Shopping mall facade with sculpted fins",
+        },
+        {
+          src: "/images/services/commercial-2.jpg",
+          alt: "Retail street with arched shopfronts at dusk",
+        },
+        {
+          src: "/images/services/commercial-3.jpg",
+          alt: "Restaurant entrance with a shell-shaped canopy at night",
+        },
       ],
     },
     {
@@ -45,9 +72,18 @@ export default function Services() {
       name: "Interiors",
       line: "Offices and interior spaces.",
       images: [
-        { src: "/images/services/interiors-1.jpg", alt: "Office interior with marble walls and a lit ceiling" },
-        { src: "/images/services/interiors-2.jpg", alt: "Living room with green and wood wall panels" },
-        { src: "/images/services/interiors-3.jpg", alt: "Bedroom with two beds and blue panelled walls" },
+        {
+          src: "/images/services/interiors-1.jpg",
+          alt: "Office interior with marble walls and a lit ceiling",
+        },
+        {
+          src: "/images/services/interiors-2.jpg",
+          alt: "Living room with green and wood wall panels",
+        },
+        {
+          src: "/images/services/interiors-3.jpg",
+          alt: "Bedroom with two beds and blue panelled walls",
+        },
       ],
     },
   ];
@@ -107,7 +143,11 @@ export default function Services() {
       : {};
 
   return (
-    <section ref={sectionRef} className="bg-ground" aria-labelledby="services-title">
+    <section
+      ref={sectionRef}
+      className="bg-ground my-24 md:my-40"
+      aria-labelledby="services-title"
+    >
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
         <h2
           id="services-title"
@@ -119,7 +159,9 @@ export default function Services() {
 
         <ol
           className="mt-10 border-b border-line md:mt-16"
-          onPointerMove={hoverMode ? (e) => moveTo(e.clientX, e.clientY) : undefined}
+          onPointerMove={
+            hoverMode ? (e) => moveTo(e.clientX, e.clientY) : undefined
+          }
           onPointerLeave={hoverMode ? () => setActive(null) : undefined}
         >
           {services.map((s, i) => (
@@ -129,7 +171,9 @@ export default function Services() {
                 className="grid grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-2 py-6 md:grid-cols-[64px_1fr_auto] md:gap-x-8 md:py-8"
                 {...rowHandlers(s.id)}
               >
-                <span className="font-mono text-xs text-gold">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs text-gold">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <motion.span
                   className="font-hero text-[clamp(36px,6vw,72px)] leading-none font-normal tracking-tight text-ink"
                   animate={{
@@ -152,7 +196,12 @@ export default function Services() {
                       key={img.src}
                       className="aspect-video w-60 shrink-0 snap-start overflow-hidden rounded-[var(--radius-card)] bg-ground-raised sm:w-72"
                     >
-                      <img src={img.src} alt={img.alt} loading="lazy" className="h-full w-full object-cover" />
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
                     </li>
                   ))}
                 </ul>
@@ -163,14 +212,21 @@ export default function Services() {
       </div>
 
       {hoverMode && near && (
-        <motion.div aria-hidden="true" className="pointer-events-none fixed top-0 left-0 z-40" style={{ x, y }}>
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none fixed top-0 left-0 z-40"
+          style={{ x, y }}
+        >
           {services.map((s) => (
             <motion.div
               key={s.id}
               className="absolute top-[-90px] left-[-160px] h-[180px] w-[320px]"
               initial={false}
               animate={active === s.id ? "show" : "hide"}
-              variants={{ show: { transition: { staggerChildren: 0.05 } }, hide: {} }}
+              variants={{
+                show: { transition: { staggerChildren: 0.05 } },
+                hide: {},
+              }}
             >
               {s.images.map((img, i) => {
                 const offset = i - (s.images.length - 1) / 2;
@@ -181,9 +237,19 @@ export default function Services() {
                     alt=""
                     decoding="async"
                     className="absolute inset-0 h-full w-full rounded-[var(--radius-card)] border border-ink/12 object-cover"
-                    style={{ zIndex: Math.round(s.images.length - Math.abs(offset) * 2) }}
+                    style={{
+                      zIndex: Math.round(
+                        s.images.length - Math.abs(offset) * 2,
+                      ),
+                    }}
                     variants={{
-                      hide: { opacity: 0, scale: 0.85, x: 0, rotate: 0, transition: { duration: 0.2, ease: EASE } },
+                      hide: {
+                        opacity: 0,
+                        scale: 0.85,
+                        x: 0,
+                        rotate: 0,
+                        transition: { duration: 0.2, ease: EASE },
+                      },
                       show: {
                         opacity: 1,
                         scale: 1,

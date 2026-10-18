@@ -66,7 +66,7 @@ export default function CaseStudies() {
   return (
     <section
       ref={rootRef}
-      className="sketchbook relative overflow-x-clip bg-ground"
+      className="sketchbook relative overflow-x-clip bg-ground my-24 md:my-40"
       aria-labelledby="case-studies-title"
     >
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6">

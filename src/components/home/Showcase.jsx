@@ -3,6 +3,25 @@ import { AnimatePresence, motion } from "motion/react";
 
 const INTERVAL_MS = 3000;
 
+// Navy fade for the section edges, eased (many small steps) so it reads as a soft shadow, not a band.
+const seam = (direction) =>
+  `linear-gradient(${direction}, ${[
+    [100, 0],
+    [86, 12],
+    [68, 25],
+    [50, 38],
+    [33, 52],
+    [19, 66],
+    [9, 80],
+    [3, 92],
+    [0, 100],
+  ]
+    .map(
+      ([alpha, at]) =>
+        `color-mix(in srgb, var(--color-ground) ${alpha}%, transparent) ${at}%`,
+    )
+    .join(", ")})`;
+
 // Full-screen image band. The image stays fixed while the page scrolls past it,
 // and cross-fades to the next one every 3 seconds.
 export default function Showcase() {
@@ -29,7 +48,7 @@ export default function Showcase() {
 
   return (
     <section
-      className="relative h-[60svh] min-h-[360px] [clip-path:inset(0)]"
+      className="relative h-[60svh] min-h-[420px] [clip-path:inset(0)]"
       aria-roledescription="carousel"
       aria-label="Project images"
     >
@@ -61,6 +80,20 @@ export default function Showcase() {
           className="pointer-events-none absolute inset-y-0 right-0 w-1/5 max-w-80 bg-linear-to-l from-ground/70 to-transparent"
         />
       </div>
+
+      {/* Seams: the image rises out of the navy at the top and sinks back into it at the bottom,
+          the same fade on both edges. Pinned to the section (not the fixed image); each reaches
+          2px past the edge so no sub-pixel row of the photo shows. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-0.5 h-28 md:h-44"
+        style={{ backgroundImage: seam("to bottom") }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-28 md:h-44"
+        style={{ backgroundImage: seam("to top") }}
+      />
 
       {images.length > 1 && (
         <button

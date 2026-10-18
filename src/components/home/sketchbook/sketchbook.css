@@ -338,7 +338,7 @@
 .sketchbook [data-sb="stage"] {
   --sb-book-w: min(var(--sb-max), 100cqw);
   --sb-band: calc(var(--sb-book-w) * 0.1536);
-  margin-top: calc(var(--space-7) - var(--sb-band));
+  margin-top: calc(var(--space-8) - var(--sb-band));
   margin-bottom: calc(var(--sb-band) * -0.5);
 }
 

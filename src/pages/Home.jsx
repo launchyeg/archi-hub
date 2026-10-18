@@ -6,8 +6,7 @@ import WhyUs from "../components/home/WhyUs.jsx";
 
 export default function Home() {
   return (
-    // The gap between sections lives here, so adding a section never doubles the space.
-    <main className="flex flex-col gap-24 pb-24 md:gap-40 md:pb-40">
+    <main>
       <Hero />
       <WhyUs />
       <Showcase />
