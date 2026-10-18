@@ -10,39 +10,29 @@ import "./sketchbook/sketchbook.css";
 // images must keep it.
 const PAGES = [
   {
-    src: "/sketchbook/marina-bay-sands.png",
-    title: "Marina Bay Sands",
+    src: "/images/sketchbook/archihub-project-00-large.png",
+    title: "Case Study 1",
     place: "Bayfront",
   },
   {
-    src: "/sketchbook/gardens-by-the-bay.png",
-    title: "Gardens by the Bay",
-    place: "Supertree Grove",
+    src: "/images/sketchbook/archihub-project-01-large.png",
+    title: "Case Study 2",
+    place: "Bayfront",
   },
   {
-    src: "/sketchbook/buddha-tooth.png",
-    title: "Buddha Tooth Relic Temple",
-    place: "Chinatown",
+    src: "/images/sketchbook/archihub-project-02-large.png",
+    title: "Case Study 3",
+    place: "Bayfront",
   },
   {
-    src: "/sketchbook/joo-chiat.png",
-    title: "Joo Chiat Shophouses",
-    place: "Katong",
+    src: "/images/sketchbook/archihub-project-03-large.png",
+    title: "Case Study 4",
+    place: "Bayfront",
   },
   {
-    src: "/sketchbook/lau-pa-sat.png",
-    title: "Lau Pa Sat",
-    place: "Raffles Quay",
-  },
-  {
-    src: "/sketchbook/marina-bay-skyline.png",
-    title: "Marina Bay Skyline",
-    place: "The Bay",
-  },
-  {
-    src: "/sketchbook/singapore-river.png",
-    title: "Singapore River",
-    place: "Boat Quay",
+    src: "/images/sketchbook/archihub-project-04-large.png",
+    title: "Case Study 5",
+    place: "Bayfront",
   },
 ];
 // The page the opening riffle lands on, and where phones open. From 0 to PAGES.length - 1.
@@ -91,7 +81,6 @@ export default function CaseStudies() {
             />
             Case Studies
           </h2>
-          {/* PLACEHOLDER: remove once the five case-study spreads replace the ThreeUI sample pages. */}
           <p className="font-mono text-xs tracking-[0.12em] text-gold-bright uppercase">
             Placeholder · sample pages
           </p>

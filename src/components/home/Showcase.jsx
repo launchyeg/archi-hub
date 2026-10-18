@@ -51,6 +51,15 @@ export default function Showcase() {
             />
           </motion.div>
         </AnimatePresence>
+        {/* Navy scrim like the hero's, but from the sides and kept light so the images stay clear. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-1/5 max-w-80 bg-linear-to-r from-ground/70 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-1/5 max-w-80 bg-linear-to-l from-ground/70 to-transparent"
+        />
       </div>
 
       {images.length > 1 && (
