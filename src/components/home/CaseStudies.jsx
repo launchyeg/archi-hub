@@ -81,7 +81,7 @@ export default function CaseStudies() {
             />
             Case Studies
           </h2>
-          <p className="font-mono text-xs tracking-[0.12em] text-gold-bright uppercase">
+          <p className="text-xs tracking-[0.12em] text-gold-bright uppercase">
             Placeholder · sample pages
           </p>
         </div>
@@ -168,7 +168,7 @@ export default function CaseStudies() {
                 </svg>
               </button>
               <span
-                className="min-w-12 text-center font-mono text-xs text-ink-dim tabular-nums"
+                className="min-w-12 text-center text-xs text-ink-dim tabular-nums"
                 data-sb="zoom-read"
               >
                 100%
@@ -227,13 +227,13 @@ export default function CaseStudies() {
                 className="group grid w-full grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-1 py-5 text-left md:grid-cols-[64px_1fr_auto] md:gap-x-8 md:py-6"
                 data-sb-plate={i}
               >
-                <span className="font-mono text-xs text-gold tabular-nums group-aria-[current=true]:text-gold-bright">
+                <span className="text-xs text-gold tabular-nums group-aria-[current=true]:text-gold-bright">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="font-hero text-lg tracking-tight text-ink transition-[color,translate] duration-300 ease-[var(--ease-out-standard)] group-hover:translate-x-2 group-aria-[current=true]:text-gold-bright">
                   {p.title}
                 </span>
-                <span className="col-start-2 font-mono text-xs tracking-[0.12em] text-ink-dim uppercase group-aria-[current=true]:text-gold md:col-start-auto md:text-right">
+                <span className="col-start-2 text-xs tracking-[0.12em] text-ink-dim uppercase group-aria-[current=true]:text-gold md:col-start-auto md:text-right">
                   {p.place}
                 </span>
               </button>

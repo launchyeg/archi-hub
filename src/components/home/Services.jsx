@@ -171,7 +171,7 @@ export default function Services() {
                 className="grid grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-2 py-6 md:grid-cols-[64px_1fr_auto] md:gap-x-8 md:py-8"
                 {...rowHandlers(s.id)}
               >
-                <span className="font-mono text-xs text-gold">
+                <span className="text-xs text-gold">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <motion.span

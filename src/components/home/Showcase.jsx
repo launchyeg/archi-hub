@@ -32,23 +32,24 @@ export default function Showcase() {
   }));
 
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(
+  // With reduced motion the first image simply stays; nothing rotates.
+  const [reduced] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
 
   useEffect(() => {
-    if (paused || images.length < 2) return undefined;
+    if (reduced || images.length < 2) return undefined;
     const id = window.setInterval(() => {
       if (!document.hidden) setIndex((i) => (i + 1) % images.length);
     }, INTERVAL_MS);
     return () => window.clearInterval(id);
-  }, [paused, images.length]);
+  }, [reduced, images.length]);
 
   const image = images[index];
 
   return (
     <section
-      className="relative h-[60svh] min-h-[420px] [clip-path:inset(0)]"
+      className="relative h-[60svh] md:h-[70svh] [clip-path:inset(0)]"
       aria-roledescription="carousel"
       aria-label="Project images"
     >
@@ -94,29 +95,6 @@ export default function Showcase() {
         className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-28 md:h-44"
         style={{ backgroundImage: seam("to top") }}
       />
-
-      {images.length > 1 && (
-        <button
-          type="button"
-          onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? "Play images" : "Pause images"}
-          className="absolute right-4 bottom-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-ink/12 bg-ground/72 text-ink sm:right-6 sm:bottom-6"
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            {paused ? (
-              <path d="M3 1.5v11l9-5.5z" />
-            ) : (
-              <path d="M3 1h3v12H3zM8 1h3v12H8z" />
-            )}
-          </svg>
-        </button>
-      )}
     </section>
   );
 }
