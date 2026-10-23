@@ -221,7 +221,8 @@ export default function Navbar() {
                     </NavLink>
                   </motion.div>
                 ))}
-                <motion.div variants={menuItem}>
+                {/* From sm up the Studio button already sits in the bar, so the menu skips it */}
+                <motion.div variants={menuItem} className="sm:hidden">
                   <Link
                     to={nav.cta.to}
                     onClick={close}
