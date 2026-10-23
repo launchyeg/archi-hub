@@ -13,7 +13,6 @@ import { EASE } from "../../lib/useReveal.js";
 gsap.registerPlugin(ScrollTrigger);
 
 const MOTION_EASE = [0.22, 1, 0.36, 1];
-// Scrolled past this, scrolling down tucks the bar away; any upward scroll brings it back.
 const HIDE_AFTER = 160;
 
 const pill =
@@ -112,7 +111,6 @@ export default function Navbar() {
         end: "max",
         onUpdate: (self) => {
           const down = self.direction === 1;
-          // Never tuck it away while the menu is open or keyboard focus is inside it.
           const busy =
             openRef.current || header.contains(document.activeElement);
           setHidden(down && self.scroll() > HIDE_AFTER && !busy);
@@ -127,7 +125,6 @@ export default function Navbar() {
     return () => mm.revert();
   }, []);
 
-  // A new page or an open menu always shows the bar.
   useEffect(() => {
     openRef.current = open;
     showRef.current();
@@ -221,7 +218,6 @@ export default function Navbar() {
                     </NavLink>
                   </motion.div>
                 ))}
-                {/* From sm up the Studio button already sits in the bar, so the menu skips it */}
                 <motion.div variants={menuItem} className="sm:hidden">
                   <Link
                     to={nav.cta.to}

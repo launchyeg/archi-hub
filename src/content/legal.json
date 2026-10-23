@@ -1,0 +1,139 @@
+{
+  "draftNote": "Draft for the company to review before launch. It has not been checked by a lawyer, and the software download form it describes is not live yet.",
+  "sections": [
+    {
+      "id": "privacy",
+      "title": "Privacy notice",
+      "summary": "What happens to the details you give us.",
+      "blocks": [
+        {
+          "p": "This notice starts with the form for our engineering software, because that is where most people share their details."
+        },
+        {
+          "h": "When you request our engineering software"
+        },
+        {
+          "p": "The Intelligence Lab lets you ask to try our desktop programs. The form asks for:"
+        },
+        {
+          "ul": [
+            "Your name",
+            "Your email address",
+            "Your company (optional)",
+            "The program you are interested in (optional)"
+          ]
+        },
+        {
+          "p": "We use these details to email you the download link you asked for, and to reply if you write back about the software. The form asks for nothing else."
+        },
+        {
+          "h": "Where your details go and how long we keep them"
+        },
+        {
+          "placeholder": "Where form submissions are stored, who can see them and how long they are kept. Waiting on the company's choice of email, Google Sheet or CRM."
+        },
+        {
+          "h": "If you send a project inquiry instead"
+        },
+        {
+          "p": "The same form also takes project inquiries. Those add a message and details about your project, which we use to reply to you and to prepare a proposal."
+        },
+        {
+          "h": "Your choices"
+        },
+        {
+          "p": "You can ask us to show you, correct or delete the details you gave us by writing to {email}."
+        },
+        {
+          "h": "Cookies and analytics"
+        },
+        {
+          "placeholder": "Whether this site uses cookies or analytics, and for what. Not decided yet."
+        },
+        {
+          "h": "Who we are"
+        },
+        {
+          "p": "Archi Hub, {address}. Email: {email}."
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "title": "Terms of service",
+      "summary": "The rules for using this website and our software.",
+      "blocks": [
+        {
+          "p": "By using this website you agree to these terms. If you do not agree, please do not use it."
+        },
+        {
+          "h": "The website"
+        },
+        {
+          "p": "The website describes Archi Hub's studio work, its process and its engineering software. It is there for information, and we may change or remove content at any time."
+        },
+        {
+          "h": "Our content"
+        },
+        {
+          "p": "The text, images, drawings and project material on this site are owned by Archi Hub or used with permission. Please ask us before you copy or reuse any of it."
+        },
+        {
+          "h": "The engineering software"
+        },
+        {
+          "placeholder": "License terms for the desktop programs: who may use them, for what, and on which conditions. Needs the company's own license text."
+        },
+        {
+          "h": "Links to other sites"
+        },
+        {
+          "p": "We link to other sites, such as our social media pages. We do not control them and are not responsible for what they contain."
+        },
+        {
+          "h": "Governing law"
+        },
+        {
+          "placeholder": "Which country's law applies and where disputes are settled. Needs the company's decision and legal advice."
+        },
+        {
+          "h": "Questions"
+        },
+        {
+          "p": "Write to us at {email}."
+        }
+      ]
+    },
+    {
+      "id": "disclaimer",
+      "title": "Disclaimer",
+      "summary": "What our software and our examples do and do not promise.",
+      "blocks": [
+        {
+          "h": "Software results are not a signed design"
+        },
+        {
+          "p": "Our programs help engineers plan and check building designs. Their results are not a finished or approved design on their own. A qualified engineer must review them and take responsibility for a design before anything is built from it."
+        },
+        {
+          "h": "Project examples"
+        },
+        {
+          "p": "The projects and results shown on this site illustrate our process. Every project is different, and showing one does not promise the same result for yours."
+        },
+        {
+          "h": "Information on this site"
+        },
+        {
+          "p": "We work to keep this site accurate, but we cannot promise that it is complete or up to date. It is not professional advice for your own building."
+        },
+        {
+          "h": "Limits on our liability"
+        },
+        {
+          "placeholder": "How far Archi Hub is responsible for losses linked to the site or the software. Needs legal review."
+        }
+      ]
+    }
+  ]
+}

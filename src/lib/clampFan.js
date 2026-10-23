@@ -1,6 +1,3 @@
-// The cursor-following image fan (Services, Testimonials) is three 320x180 cards,
-// spread ±64px and turned ±7°: about 234px from its centre to each side and 109px
-// up and down. Keep that whole shape, plus a 16px margin, inside the viewport.
 const HALF_W = 234 + 16;
 const HALF_H = 109 + 16;
 

@@ -55,6 +55,7 @@ export default function CaseStudies() {
 
   return (
     <section
+      id="projects"
       ref={rootRef}
       className="sketchbook relative overflow-x-clip bg-ground my-16 md:my-28"
       aria-labelledby="case-studies-title"

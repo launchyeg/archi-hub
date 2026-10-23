@@ -39,9 +39,9 @@ const footer = {
     {
       title: "Legal",
       links: [
-        { label: "Privacy notice", to: "/legal" },
-        { label: "Terms of service", to: "/legal" },
-        { label: "Disclaimer", to: "/legal" },
+        { label: "Privacy notice", to: "/legal#privacy" },
+        { label: "Terms of service", to: "/legal#terms" },
+        { label: "Disclaimer", to: "/legal#disclaimer" },
       ],
     },
   ],
@@ -229,18 +229,20 @@ export default function Footer() {
               ·
             </span>{" "}
             All rights reserved{" "}
-            <span aria-hidden="true" className="mx-1">
+            <span aria-hidden="true" className="mx-1 hidden sm:inline">
               ·
             </span>{" "}
-            Crafted by{" "}
-            <a
-              href="https://aaaportfolio.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-              className="text-ink transition-colors hover:text-gold-bright"
-            >
-              Launchy
-            </a>
+            <span className="block sm:inline">
+              Crafted by{" "}
+              <a
+                href="https://aaaportfolio.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-ink transition-colors hover:text-gold-bright"
+              >
+                Launchy
+              </a>
+            </span>
           </p>
           <ul className="flex items-center gap-6">
             <li>

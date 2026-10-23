@@ -150,7 +150,6 @@ export default function Services() {
       className="relative isolate overflow-x-clip bg-ground my-16 md:my-28"
       aria-labelledby="services-title"
     >
-      {/* Turned 180°; scrim is light behind the large names, darker behind the small descriptions */}
       <ContourBackdrop
         orientation="rotate-180"
         mobileMirror

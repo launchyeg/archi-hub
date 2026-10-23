@@ -54,6 +54,16 @@ Marked `claimsStatus` or "to confirm with the company" in `src/content/home.js`.
 - [ ] Contact: "We reply by email"
 - [ ] FAQ questions awaiting answers: supported operating systems, software price, countries served
 
+## Legal and Careers pages (drafted, need the company)
+Text lives in `src/content/legal.json` and `src/content/careers.json`. Open items show on the page as PLACEHOLDER blocks.
+- [ ] A lawyer or the company reviews the whole Legal draft (privacy notice, terms, disclaimer) before launch
+- [ ] Privacy: where submissions are stored, who sees them, how long they are kept (depends on the lead destination above)
+- [ ] Privacy: whether the site uses cookies or analytics
+- [ ] Privacy: confirm the data subject promise ("ask us to show, correct or delete your details by email")
+- [ ] Terms: license terms for the desktop programs, and governing law
+- [ ] Disclaimer: confirm the wording that a qualified engineer must review software results, and the liability limit
+- [ ] Careers: open roles (title, location, summary), or confirm the "no open roles" wording and the email-your-CV route
+
 ## Before launch
 - [ ] Hide or replace Client voices, Where we work and the placeholder stat cards if real data is missing (no dashes shipped)
 - [ ] Lead backend, once forms are built: the download path promises an email with a link, so it must actually be sent

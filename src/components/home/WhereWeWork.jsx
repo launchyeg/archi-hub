@@ -291,7 +291,6 @@ export default function WhereWeWork() {
   useEffect(() => {
     if (!activeId) return undefined;
     const onOutsideClick = (e) => {
-      // Only clicks inside this section clear the pin; elsewhere would reflow the page.
       if (!sectionRef.current?.contains(e.target)) return;
       if (e.target.closest("[data-map-region], [data-map-panel]")) return;
       setActiveId(null);
