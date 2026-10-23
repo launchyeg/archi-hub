@@ -1,16 +1,13 @@
-import { FaFacebook, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { LuFacebook, LuInstagram, LuLinkedin, LuTwitter } from "react-icons/lu";
+import { socials } from "../../content/company.js";
 
-// One list of Archi Hub's social accounts, used by Contact and the footer.
-// PLACEHOLDER: the accounts aren't known yet. Put each profile URL in `href`;
-// an icon without a URL is shown but isn't a link.
-const SOCIALS = [
-  { name: "Facebook", href: null, Icon: FaFacebook },
-  { name: "Instagram", href: null, Icon: FaInstagram },
-  { name: "X", href: null, Icon: FaXTwitter },
-  { name: "LinkedIn", href: null, Icon: FaLinkedinIn },
-];
+const ICONS = {
+  Facebook: LuFacebook,
+  Instagram: LuInstagram,
+  X: LuTwitter,
+  LinkedIn: LuLinkedin,
+};
 
-// className: the list; iconClassName: the icon size; itemClassName: each icon's box and colour.
 export default function SocialLinks({
   className = "flex items-center gap-1",
   iconClassName = "size-5",
@@ -18,8 +15,9 @@ export default function SocialLinks({
 }) {
   return (
     <ul className={className} aria-label="Social media">
-      {SOCIALS.map((s) => {
-        const icon = <s.Icon className={iconClassName} aria-hidden="true" />;
+      {socials.map((s) => {
+        const Icon = ICONS[s.name];
+        const icon = <Icon className={iconClassName} aria-hidden="true" />;
         return (
           <li key={s.name}>
             {s.href ? (
@@ -33,7 +31,10 @@ export default function SocialLinks({
                 {icon}
               </a>
             ) : (
-              <span title={`${s.name}: link pending`} className={`grid place-items-center ${itemClassName}`}>
+              <span
+                title={`${s.name}: link pending`}
+                className={`grid place-items-center ${itemClassName}`}
+              >
                 {icon}
                 <span className="sr-only">{s.name} (link pending)</span>
               </span>

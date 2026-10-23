@@ -1,18 +1,8 @@
-/* Sketchbook: the parts the engine builds or drives (the book, the turning leaf and the
-   caption). Ported from ThreeUI "Meng To Sketchbook"
-   (@designcodeio/threeui 1.2.0, MIT, Copyright (c) 2026 Meng To; see LICENSE-threeui.txt).
-   Layout and controls are Tailwind classes in CaseStudies.jsx.
-
-   Colours come from tokens.css. The warm rgba() browns and the #fffaf0 gloss below are the
-   paper's own lighting while a leaf turns (shading on the cream pages), not UI colours. */
-
 .sketchbook {
-  /* the book casts its shadow onto the navy desk: a deeper navy, never black */
-  --sb-max: 1120px; /* the book's maximum width on desktop */
+  --sb-max: 1120px;
   --sb-shadow: color-mix(in srgb, var(--color-ground) 40%, black);
 }
 
-/* The box is the book's own untransformed frame; only .sb-tilt leans and scales inside it. */
 .sketchbook .sb-3d {
   position: relative;
   flex: 1 1;
@@ -36,8 +26,6 @@
   z-index: 1;
 }
 
-/* The book's shadow on the desk: two blurred pools under the paper that ease off while
-   a leaf is in the air. Solid fills blurred, so no gradients. */
 .sketchbook .sb-cast {
   position: absolute;
   pointer-events: none;
@@ -94,7 +82,6 @@
 .sketchbook .sb-half-img.right {
   margin-left: -100%;
 }
-/* the shadow the lifting leaf throws onto the page beneath it */
 .sketchbook .gutter-shade {
   position: absolute;
   top: var(--pg, 21.8%);
@@ -134,7 +121,6 @@
   );
 }
 
-/* ---- the turning leaf: nested strips forming a curved surface ---- */
 .sketchbook .curl {
   position: absolute;
   top: 0;
@@ -266,7 +252,6 @@
   opacity: calc(var(--shade, 0) * var(--lit, 1) * var(--lit, 1) * 0.2);
 }
 
-/* invisible hit areas over each half of the book, built by the engine */
 .sketchbook .sb-zone {
   position: absolute;
   top: 0;
@@ -289,7 +274,6 @@
   width: 50%;
 }
 
-/* ---- the caption under the book: the current page's title ---- */
 .sketchbook .sb-captions {
   display: grid;
   justify-items: center;
@@ -316,7 +300,6 @@
   }
 }
 
-/* the opening riffle blurs the pages sideways as they flick past */
 .sketchbook .sb-wrap.intro .sb-full img,
 .sketchbook .sb-wrap.intro .sb-half-img {
   filter: url(#sb-mblur-1);
@@ -329,9 +312,6 @@
   animation: none;
 }
 
-/* The spreads carry empty desk above and below the paper (15.36% of the book's width each).
-   Pull the stage up so the paper itself sits one gap under the heading, and tuck half of
-   the lower band under the caption. */
 .sketchbook .sb-wrap {
   container-type: inline-size;
 }

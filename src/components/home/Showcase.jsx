@@ -1,9 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import useReveal from "../../lib/useReveal.js";
 
 const INTERVAL_MS = 3000;
 
-// Navy fade for the section edges, eased (many small steps) so it reads as a soft shadow, not a band.
+const IMAGES = [
+  {
+    src: "/images/showcase/showcase1.jpeg",
+    alt: "Archi Hub project, view 1",
+    project: "Project name",
+    tool: "AI tool 4",
+  },
+  {
+    src: "/images/showcase/showcase2.jpeg",
+    alt: "Archi Hub project, view 2",
+    project: "Project name",
+    tool: "AI tool 4",
+  },
+  {
+    src: "/images/showcase/showcase3.jpeg",
+    alt: "Archi Hub project, view 3",
+    project: "Project name",
+    tool: "AI tool 4",
+  },
+  {
+    src: "/images/showcase/showcase4.jpeg",
+    alt: "Archi Hub project, view 4",
+    project: "Project name",
+    tool: "AI tool 4",
+  },
+];
+
 const seam = (direction) =>
   `linear-gradient(${direction}, ${[
     [100, 0],
@@ -22,39 +49,32 @@ const seam = (direction) =>
     )
     .join(", ")})`;
 
-// Full-screen image band. The image stays fixed while the page scrolls past it,
-// and cross-fades to the next one every 3 seconds.
 export default function Showcase() {
-  // Images live in public/images/. Alt text is generic until the projects are named.
-  const images = [1, 2, 3, 4].map((n) => ({
-    src: `/images/showcase/showcase${n}.jpeg`,
-    alt: `Archi Hub project, view ${n}`,
-  }));
-
+  const sectionRef = useRef(null);
+  useReveal(sectionRef, { selector: "[data-reveal]" });
   const [index, setIndex] = useState(0);
-  // With reduced motion the first image simply stays; nothing rotates.
   const [reduced] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
 
   useEffect(() => {
-    if (reduced || images.length < 2) return undefined;
+    if (reduced || IMAGES.length < 2) return undefined;
     const id = window.setInterval(() => {
-      if (!document.hidden) setIndex((i) => (i + 1) % images.length);
+      if (!document.hidden) setIndex((i) => (i + 1) % IMAGES.length);
     }, INTERVAL_MS);
     return () => window.clearInterval(id);
-  }, [reduced, images.length]);
+  }, [reduced]);
 
-  const image = images[index];
+  const image = IMAGES[index];
 
   return (
     <section
+      ref={sectionRef}
       className="relative h-[60svh] md:h-[70svh] [clip-path:inset(0)]"
       aria-roledescription="carousel"
       aria-label="Project images"
     >
-      {/* Fixed layer, clipped to the section: the image holds still while the section scrolls. */}
-      <div className="fixed inset-0 bg-ground">
+      <div className="fixed inset-0 bg-ground" data-reveal>
         <AnimatePresence initial={false}>
           <motion.div
             key={index}
@@ -71,7 +91,6 @@ export default function Showcase() {
             />
           </motion.div>
         </AnimatePresence>
-        {/* Navy scrim like the hero's, but from the sides and kept light so the images stay clear. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 left-0 w-1/5 max-w-80 bg-linear-to-r from-ground/70 to-transparent"
@@ -82,9 +101,6 @@ export default function Showcase() {
         />
       </div>
 
-      {/* Seams: the image rises out of the navy at the top and sinks back into it at the bottom,
-          the same fade on both edges. Pinned to the section (not the fixed image); each reaches
-          2px past the edge so no sub-pixel row of the photo shows. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-0.5 h-28 md:h-44"
@@ -95,6 +111,26 @@ export default function Showcase() {
         className="pointer-events-none absolute inset-x-0 -bottom-0.5 h-28 md:h-44"
         style={{ backgroundImage: seam("to top") }}
       />
+
+      <div
+        className="pointer-events-none absolute bottom-10 left-4 sm:left-6 md:bottom-14"
+        data-reveal
+      >
+        <motion.div
+          key={index}
+          className="flex flex-wrap items-center gap-2"
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="rounded-full border border-gold/50 bg-ground/70 px-3 py-1.5 text-xs tracking-[0.12em] text-gold-bright">
+            {image.project}
+          </span>
+          <span className="rounded-full border border-signal/40 bg-ground/70 px-3 py-1.5 text-xs tracking-[0.12em] text-signal">
+            {image.tool}
+          </span>
+        </motion.div>
+      </div>
     </section>
   );
 }

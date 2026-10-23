@@ -29,3 +29,6 @@ dist-ssr
 .vercel
 coverage
 .claude/settings.local.json
+
+# Impeccable review notes stay local
+.impeccable/critique/

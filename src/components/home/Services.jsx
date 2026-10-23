@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useSpring } from "motion/react";
 import { Link } from "react-router-dom";
+import useReveal from "../../lib/useReveal.js";
+import clampFan from "../../lib/clampFan.js";
+import ContourBackdrop from "../layout/ContourBackdrop.jsx";
 
 const EASE = [0.22, 1, 0.36, 1];
 const SPRING = { stiffness: 260, damping: 28, mass: 0.6 };
 
-// Hover a service and a fanned stack of its images follows the cursor.
-// Touch screens and reduced motion get the images inline under each row instead.
 export default function Services() {
-  // Service names and lines are to confirm with Archi Hub (docs/OPEN-ITEMS.md: "List of services").
   const services = [
     {
       id: "residential",
       name: "Residential",
-      line: "Villas, townhouses and apartment buildings.",
+      line: "Private villas, luxury townhouses, and multi-family residential complexes",
       images: [
         {
           src: "/images/services/residential-1.jpg",
@@ -32,7 +32,7 @@ export default function Services() {
     {
       id: "hospitality",
       name: "Hospitality",
-      line: "Hotels, motels and resort residences.",
+      line: "Boutique hotels, luxury resorts, and mixed-use hospitality developments.",
       images: [
         {
           src: "/images/services/hospitality-1.jpg",
@@ -51,7 +51,7 @@ export default function Services() {
     {
       id: "commercial",
       name: "Commercial",
-      line: "Malls, retail streets and restaurant fronts.",
+      line: "Shopping malls, retail hubs, and high-end commercial spaces.",
       images: [
         {
           src: "/images/services/commercial-1.jpg",
@@ -70,7 +70,7 @@ export default function Services() {
     {
       id: "interiors",
       name: "Interiors",
-      line: "Offices and interior spaces.",
+      line: "Corporate offices, commercial interiors, and specialized spatial designs.",
       images: [
         {
           src: "/images/services/interiors-1.jpg",
@@ -89,6 +89,8 @@ export default function Services() {
   ];
 
   const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  useReveal(contentRef);
   const [active, setActive] = useState(null);
   const [near, setNear] = useState(false);
   const [hoverMode] = useState(
@@ -99,7 +101,6 @@ export default function Services() {
   const x = useSpring(0, SPRING);
   const y = useSpring(0, SPRING);
 
-  // Load the preview images only once the section gets close.
   useEffect(() => {
     if (!hoverMode) return undefined;
     const io = new IntersectionObserver(
@@ -115,8 +116,8 @@ export default function Services() {
     return () => io.disconnect();
   }, [hoverMode]);
 
-  // Jump when the stack first appears so it doesn't fly in from the last spot.
-  const moveTo = (px, py) => {
+  const moveTo = (cx, cy) => {
+    const [px, py] = clampFan(cx, cy);
     if (active === null) {
       x.jump(px);
       y.jump(py);
@@ -144,11 +145,18 @@ export default function Services() {
 
   return (
     <section
+      id="services"
       ref={sectionRef}
-      className="bg-ground my-24 md:my-40"
+      className="relative isolate overflow-x-clip bg-ground my-16 md:my-28"
       aria-labelledby="services-title"
     >
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+      {/* Turned 180°; scrim is light behind the large names, darker behind the small descriptions */}
+      <ContourBackdrop
+        orientation="rotate-180"
+        mobileMirror
+        scrimClassName="bg-[color-mix(in_srgb,var(--color-ground)_68%,transparent)] md:bg-[linear-gradient(to_right,color-mix(in_srgb,var(--color-ground)_25%,transparent),color-mix(in_srgb,var(--color-ground)_32%,transparent)_45%,color-mix(in_srgb,var(--color-ground)_72%,transparent)_68%)]"
+      />
+      <div ref={contentRef} className="mx-auto max-w-[1280px] px-4 sm:px-6">
         <h2
           id="services-title"
           className="inline-flex items-center gap-2 rounded-full border border-[#ffdaa41f] bg-[radial-gradient(circle_farthest-corner_at_50%_50%,color-mix(in_srgb,var(--color-ink)_5%,transparent),color-mix(in_srgb,var(--color-ink)_20%,transparent))] px-4 py-2 text-sm font-normal text-ink"
@@ -184,7 +192,7 @@ export default function Services() {
                 >
                   {s.name}
                 </motion.span>
-                <span className="col-start-2 text-sm text-ink-dim md:col-start-auto md:max-w-[28ch] md:text-right">
+                <span className="col-start-2 text-ink-dim md:col-start-auto md:max-w-xs md:text-right">
                   {s.line}
                 </span>
               </Link>

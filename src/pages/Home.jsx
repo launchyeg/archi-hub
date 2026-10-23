@@ -7,15 +7,17 @@ import Faq from "../components/home/Faq.jsx";
 import Contact from "../components/home/Contact.jsx";
 import WhereWeWork from "../components/home/WhereWeWork.jsx";
 import WhyUs from "../components/home/WhyUs.jsx";
+import Process from "../components/home/Process.jsx";
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <WhyUs />
+      <Process />
       <Showcase />
-      <Services />
       <CaseStudies />
+      <Services />
       <Testimonials />
       <WhereWeWork />
       <Faq />

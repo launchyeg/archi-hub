@@ -1,50 +1,40 @@
 import { useEffect, useRef } from "react";
 import { mountSketchbook } from "./sketchbook/sketchbook.js";
 import "./sketchbook/sketchbook.css";
+import useReveal from "../../lib/useReveal.js";
 
-// Case Studies: a sketchbook you page through, ported from ThreeUI's "Meng To Sketchbook"
-// (MIT, see sketchbook/LICENSE-threeui.txt). Layout and controls are here; the page-turn
-// logic is sketchbook/sketchbook.js and the book's own styles are sketchbook/sketchbook.css.
-// Each page is ONE 1760x1240 transparent PNG of the whole open sketchbook (both pages), in
-// public/sketchbook/. The page turn is calibrated to that exact book position, so new
-// images must keep it.
 const PAGES = [
   {
     src: "/images/sketchbook/archihub-project-00-large.png",
     title: "Case Study 1",
-    place: "Bayfront",
   },
   {
     src: "/images/sketchbook/archihub-project-01-large.png",
     title: "Case Study 2",
-    place: "Bayfront",
   },
   {
     src: "/images/sketchbook/archihub-project-02-large.png",
     title: "Case Study 3",
-    place: "Bayfront",
   },
   {
     src: "/images/sketchbook/archihub-project-03-large.png",
     title: "Case Study 4",
-    place: "Bayfront",
   },
   {
     src: "/images/sketchbook/archihub-project-04-large.png",
     title: "Case Study 5",
-    place: "Bayfront",
   },
 ];
-// The page the opening riffle lands on, and where phones open. From 0 to PAGES.length - 1.
 const LAND = 6;
 
 const iconButton =
-  "grid size-9 place-items-center rounded-full text-ink-dim transition-colors enabled:hover:bg-line enabled:hover:text-ink disabled:opacity-30 aria-pressed:bg-line aria-pressed:text-gold-bright";
+  "grid size-9 place-items-center rounded-full text-ink-dim transition-colors enabled:hover:bg-line enabled:hover:text-ink disabled:opacity-30";
 
 export default function CaseStudies() {
   const rootRef = useRef(null);
+  const contentRef = useRef(null);
+  useReveal(contentRef);
 
-  // Start the sketchbook only when the section gets close, so its images don't load with the rest of Home.
   useEffect(() => {
     const root = rootRef.current;
     let unmount = null;
@@ -66,32 +56,21 @@ export default function CaseStudies() {
   return (
     <section
       ref={rootRef}
-      className="sketchbook relative overflow-x-clip bg-ground my-24 md:my-40"
+      className="sketchbook relative overflow-x-clip bg-ground my-16 md:my-28"
       aria-labelledby="case-studies-title"
     >
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2
-            id="case-studies-title"
-            className="inline-flex items-center gap-2 rounded-full border border-[#ffdaa41f] bg-[radial-gradient(circle_farthest-corner_at_50%_50%,color-mix(in_srgb,var(--color-ink)_5%,transparent),color-mix(in_srgb,var(--color-ink)_20%,transparent))] px-4 py-2 text-sm font-normal text-ink"
-          >
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full bg-amber"
-            />
-            Case Studies
-          </h2>
-          <p className="text-xs tracking-[0.12em] text-gold-bright uppercase">
-            Placeholder · sample pages
-          </p>
-        </div>
-
-        <div
-          className="relative select-none [overflow-anchor:none]"
-          data-sb="hero"
+      <div ref={contentRef} className="mx-auto max-w-[1280px] px-4 sm:px-6">
+        <h2
+          id="case-studies-title"
+          className="mx-auto flex w-fit items-center gap-2 rounded-full border border-[#ffdaa41f] bg-[radial-gradient(circle_farthest-corner_at_50%_50%,color-mix(in_srgb,var(--color-ink)_5%,transparent),color-mix(in_srgb,var(--color-ink)_20%,transparent))] px-4 py-2 text-sm font-normal text-ink"
         >
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-amber" />
+          Case Studies
+        </h2>
+
+        <div className="relative select-none [overflow-anchor:none]">
           <div
-            className="sb-wrap relative z-[2] grid w-full justify-items-center gap-6 max-sm:mx-[calc(50%-50vw)] max-sm:w-screen"
+            className="sb-wrap relative z-[2] grid w-full justify-items-center max-sm:mx-[calc(50%-50vw)] max-sm:w-screen"
             data-sb="wrap"
           >
             <svg
@@ -124,7 +103,7 @@ export default function CaseStudies() {
             <div className="sb-captions" data-sb="captions" />
 
             <div
-              className="relative z-10 flex items-center gap-1 rounded-full border border-line bg-ground-raised p-1"
+              className="relative mt-5 z-10 flex items-center gap-1 rounded-full border border-line bg-ground-raised p-1"
               role="group"
               aria-label="page and zoom controls"
             >
@@ -215,31 +194,6 @@ export default function CaseStudies() {
             </div>
           </div>
         </div>
-
-        {/* <ol
-          className="mt-16 border-b border-line md:mt-24"
-          aria-label="Case study index"
-        >
-          {PAGES.map((p, i) => (
-            <li key={p.src} className="border-t border-line">
-              <button
-                type="button"
-                className="group grid w-full grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-1 py-5 text-left md:grid-cols-[64px_1fr_auto] md:gap-x-8 md:py-6"
-                data-sb-plate={i}
-              >
-                <span className="text-xs text-gold tabular-nums group-aria-[current=true]:text-gold-bright">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-hero text-lg tracking-tight text-ink transition-[color,translate] duration-300 ease-[var(--ease-out-standard)] group-hover:translate-x-2 group-aria-[current=true]:text-gold-bright">
-                  {p.title}
-                </span>
-                <span className="col-start-2 text-xs tracking-[0.12em] text-ink-dim uppercase group-aria-[current=true]:text-gold md:col-start-auto md:text-right">
-                  {p.place}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ol> */}
       </div>
     </section>
   );

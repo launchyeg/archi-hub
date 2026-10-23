@@ -36,12 +36,12 @@ All Home content lives in `src/content/home.js`.
 - [ ] About images: studio at work, project model or drawing set, engineer reviewing a design (`about.images`)
 - [ ] What we deliver: six card images (`deliver.items[].imageNote`)
 - [ ] Lab preview: screen recording for each program (`labPreview.programs`)
-- [ ] Where we work: map and studio/project locations (`whereWeWork`)
+- [ ] Where we work: map and studio/project locations (`whereWeWork`). Destinations and studio address confirmed (`src/content/company.js`). Still open: which project stands in which destination
 - [ ] Hero glass stat card figures for a real project: floor area, options reviewed (`hero.statCard`)
 - [ ] Hero stat cards: projects delivered, desktop programs (`stats`). Only "5 stages" is real
 - [ ] Program names, engineer's problem and result for Programs A, B, C (`labPreview`)
 - [ ] Real, approved client quotes (`clientVoices.quotes`), or set `clientVoices.visible` to `false`
-- [ ] Contact email, phone and studio address (`contact.details`)
+- [ ] Contact email, phone and studio address (`contact.details`). Confirmed and used in the Where we work studio panel (`studio` in `src/content/company.js`). Social media links still missing (`socials` in `src/content/company.js`)
 
 ## Claims to confirm with the company
 Marked `claimsStatus` or "to confirm with the company" in `src/content/home.js`.

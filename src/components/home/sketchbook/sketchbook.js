@@ -1,24 +1,4 @@
-/* =====================================================================
-   Sketchbook engine, ported from ThreeUI "Meng To Sketchbook"
-   (@designcodeio/threeui 1.2.0, MIT, Copyright (c) 2026 Meng To;
-   see LICENSE-threeui.txt).
-
-   Spreads are transparent PNGs of an open sketchbook.  The leaf that
-   turns is a real curved surface: a chain of nested strips whose tangent
-   sweeps through an arc, so the page bends the way paper bends instead
-   of pivoting like a flat door.
-
-   React port: the original ran once on its own page.  mountSketchbook()
-   wires the same logic to the markup inside `root` (found by data-sb
-   attributes) and returns a cleanup function.  Required: wrap, stage,
-   view, book, captions.  Optional pieces (arrows, zoom tools,
-   plate rows) can be deleted from the markup and the engine skips them.
-   The original's hint line, scroll cue, About jump and ThreeUI
-   screenshot-mode URL params were removed.  Other changes are marked
-   "React port:".
-   ===================================================================== */
 export function mountSketchbook(root, { pages, land = 0 }) {
-  /* React port: one AbortController removes every listener on cleanup */
   const ac = new AbortController();
   const on = (target, type, fn, opts) => target?.addEventListener(type, fn, { ...opts, signal: ac.signal });
   const q = (name) => root.querySelector('[data-sb="' + name + '"]');
@@ -27,7 +7,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   const later = (fn, ms) => timers.push(setTimeout(() => { if (!disposed) fn(); }, ms));
 
   const PAGES = pages.map((p) => ({ ...p, url: p.src }));
-  /* React port: clamped so a shorter page list can't land past its end */
   const M = PAGES.length, LAND = Math.min(Math.max(0, land), M - 1);
 
   const wrap = q('wrap');
@@ -39,15 +18,12 @@ export function mountSketchbook(root, { pages, land = 0 }) {
 
   const zRead = q('zoom-read');
   const zInBtn = q('zoom-in'), zOutBtn = q('zoom-out');
-  /* React port: the plate rows are rendered by React */
-  const plateBtns = [...root.querySelectorAll('[data-sb-plate]')];
 
-  /* ------------------------------------------------ the turning leaf */
-  const N = 18;            /* strips — enough for a smooth curve          */
-  const SPAN = 0.449;      /* gutter → outer page edge, as a fraction     */
-  const BETA = 0.60;       /* peak curl of the arc, radians              */
-  let idx = 0, turn = null;  /* turn = {dir, from, to, t}                 */
-  let strips = [];         /* the chain, kept for per-frame lighting       */
+  const N = 18;
+  const SPAN = 0.449;
+  const BETA = 0.60;
+  let idx = 0, turn = null;
+  let strips = [];
   let capOut = null, capIn = null;
 
   function el(t, c) { const e = document.createElement(t); if (c) e.className = c; return e; }
@@ -62,8 +38,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     d.appendChild(el('div', 'gutter-shade ' + pos));
     return d;
   }
-  /* build the strip chain once per turn; background offsets are pure
-     geometry, so they never need touching again while it animates */
   function buildCurl(dir, from, to) {
     strips = [];
     const c = el('div', 'curl ' + dir);
@@ -75,8 +49,8 @@ export function mountSketchbook(root, { pages, land = 0 }) {
       s.style.setProperty('--i', i);
       const gut = 'calc(var(--bw) * 0.5)';
       const sw = 'calc(var(--bw) * ' + SPAN + ' / ' + N + ')';
-      const A = 'calc(-1 * (' + gut + ' + ' + i + ' * ' + sw + '))';         /* faces the from-page  */
-      const B = 'calc(' + (i + 1) + ' * ' + sw + ' - ' + gut + ')';            /* faces the to-page    */
+      const A = 'calc(-1 * (' + gut + ' + ' + i + ' * ' + sw + '))';
+      const B = 'calc(' + (i + 1) + ' * ' + sw + ' - ' + gut + ')';
       const f = el('div', 'face front'), b = el('div', 'face back');
       const dress = (e, url, px) => {
         e.style.backgroundImage = 'url(' + url + ')';
@@ -94,8 +68,8 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     return c;
   }
   function applyTurn(t) {
-    const th = Math.PI * t;                       /* how far the leaf has swung */
-    const beta = BETA * Math.sin(Math.PI * t);    /* it is flat at both ends    */
+    const th = Math.PI * t;
+    const beta = BETA * Math.sin(Math.PI * t);
     const D = 180 / Math.PI;
     const tt = th + beta, td = 2 * beta / N;
     sb3d.style.setProperty('--tt', (tt * D).toFixed(2) + 'deg');
@@ -103,8 +77,8 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     sb3d.style.setProperty('--shade', Math.sin(Math.PI * t).toFixed(3));
     fadeCaption(t);
     for (let i = 0; i < strips.length; i++) {
-      const l1 = Math.abs(Math.cos(tt - i * td));        /* facing at this strip's near edge */
-      const l2 = Math.abs(Math.cos(tt - (i + 1) * td));  /* ...and at its far edge           */
+      const l1 = Math.abs(Math.cos(tt - i * td));
+      const l2 = Math.abs(Math.cos(tt - (i + 1) * td));
       const st = strips[i].style;
       st.setProperty('--lit', l1.toFixed(3));
       st.setProperty('--a1', ((1 - l1) * .62).toFixed(3));
@@ -131,7 +105,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     book.appendChild(a); book.appendChild(b);
     layout();
     caption();
-    marks();
   }
   function caption() {
     capBox.textContent = '';
@@ -146,8 +119,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   }
   function fadeCaption(t) {
     if (!capOut || !capIn) return;
-    /* the old title is gone before the new one arrives, so they never
-       sit on top of each other mid-drag */
     const out = 1 - Math.max(0, Math.min(1, (t - 0.10) / 0.28));
     const inn = Math.max(0, Math.min(1, (t - 0.56) / 0.30));
     capOut.style.opacity = out.toFixed(3);
@@ -158,13 +129,11 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   }
   on(window, 'resize', layout);
 
-  /* ------------------------------------------------------ spring loop */
   let spring = null;
   function animateTo(target, onDone, stiff, damp) {
     spring = { kind: 'spring', v: 0, target: target, done: onDone, k: stiff || 150, c: damp || 22 };
     kick();
   }
-  /* the riffle wants a fixed tempo, not a spring settling time */
   function tweenTo(target, dur, onDone) {
     spring = { kind: 'tween', from: turn ? turn.t : 0, target: target, dur: dur, e: 0, done: onDone };
     kick();
@@ -194,15 +163,11 @@ export function mountSketchbook(root, { pages, land = 0 }) {
       }
     }
     viewSpring();
-    /* kick() may already have queued the next frame from a done-callback */
     if ((spring || viewActive) && raf === null) raf = requestAnimationFrame(tick);
   }
   function kick() { if (raf === null && !disposed) { last = performance.now(); raf = requestAnimationFrame(tick); } }
 
-  /* ------------------------------------------- tilt + zoom of the book */
-  const TILT_X = 4.5, TILT_Y = 7;      /* degrees — deliberately restrained   */
-  /* React port: fixed zoom steps (the original multiplied by 1.16, which drifted off 100%
-     after hitting a limit). 100% is always one of the stops. */
+  const TILT_X = 4.5, TILT_Y = 7;
   const ZOOM_STEPS = [0.9, 1, 1.16, 1.35, 1.5];
   const ZOOM_MIN = ZOOM_STEPS[0], ZOOM_MAX = ZOOM_STEPS[ZOOM_STEPS.length - 1];
   const view = { rx: 0, ry: 0, z: 1, trx: 0, try_: 0, tz: 1 };
@@ -231,33 +196,28 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     viewActive = true; kick();
     syncZoom();
   }
-  /* the book leans toward the cursor — no dragging, and never far */
   function tiltTo(cx, cy) {
-    if (drag) return;                       /* hold still while a page is being turned */
+    if (drag) return;
     const r = book.getBoundingClientRect();
     if (!r.width) return;
     const nx = Math.max(-1, Math.min(1, (cx - (r.left + r.width / 2)) / (r.width * 0.62)));
     const ny = Math.max(-1, Math.min(1, (cy - (r.top + r.height / 2)) / (r.height * 0.9)));
     setView(-ny * TILT_X, nx * TILT_Y, view.tz);
   }
-  /* React port: the tilt only follows the cursor while the book is on screen */
   on(window, 'pointermove', (e) => {
     if (e.pointerType === 'touch' || !inView) return;
     tiltTo(e.clientX, e.clientY);
   }, { passive: true });
   on(window, 'pointerout', (e) => { if (!e.relatedTarget) setView(0, 0, view.tz); });
   on(window, 'blur', () => setView(0, 0, view.tz));
-  /* the wheel belongs to the page — zoom is on the toolbar, or a double click
-     to come back to 100% */
   on(stage, 'dblclick', () => setView(view.trx, view.try_, 1));
 
-  /* ------------------------------------------------------- pointer work */
   let drag = null;
   function bookRect() { return book.getBoundingClientRect(); }
 
   on(stage, 'pointerdown', (e) => {
     if (e.button !== 0) return;
-    e.preventDefault();                     /* no text selection, no image drag */
+    e.preventDefault();
     const onBook = e.target.closest('.sb-zone');
     stage.setPointerCapture(e.pointerId);
     if (!onBook || introOn) return;
@@ -281,7 +241,7 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     if (!drag) return;
     const d = drag; drag = null;
     if (!turn) return;
-    if (d.moved < 6) {                              /* a tap, not a drag */
+    if (d.moved < 6) {
       commit(); return;
     }
     const go = turn.t > 0.42 || d.vel > 1.1;
@@ -292,10 +252,9 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   on(stage, 'pointerup', endDrag);
   on(stage, 'pointercancel', endDrag);
 
-  /* ------------------------------------------------------ turn control */
   function startTurn(dir, t) {
     spring = null;
-    if (turn) { idx = turn.to; turn = null; }      /* settle anything still in flight */
+    if (turn) { idx = turn.to; turn = null; }
     const from = idx;
     turn = { dir: dir, from: from, to: dir === 'next' ? (from + 1) % M : (from - 1 + M) % M, t: t || 0 };
     paint();
@@ -313,20 +272,11 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   }
   function step(dir) {
     if (introOn) endIntro();
-    if (turn) { /* finish whatever is in flight first */ idx = turn.to; turn = null; }
-    startTurn(dir, 0); commit();
-  }
-  function goTo(i) {
-    if (introOn) endIntro();
-    if (i === idx) return;
     if (turn) { idx = turn.to; turn = null; }
-    const fwd = (i - idx + M) % M, back = (idx - i + M) % M;
-    if (Math.min(fwd, back) === 1) { step(fwd === 1 ? 'next' : 'prev'); return; }
-    idx = i; paint();
+    startTurn(dir, 0); commit();
   }
   on(q('prev'), 'click', () => step('prev'));
   on(q('next'), 'click', () => step('next'));
-  /* React port: arrow keys only turn the book while it is on screen */
   on(window, 'keydown', (e) => {
     if (!inView) return;
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
@@ -337,7 +287,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     step(e.key === 'ArrowRight' ? 'next' : 'prev');
   });
 
-  /* --------------------------------------------------------- zoom tools */
   function syncZoom() {
     if (zRead) zRead.textContent = Math.round(view.tz * 100) + '%';
     if (zOutBtn) zOutBtn.disabled = view.tz <= ZOOM_MIN + 0.001;
@@ -352,17 +301,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   on(zInBtn, 'click', () => zoomStep(1));
   on(zOutBtn, 'click', () => zoomStep(-1));
 
-  /* --------------------------------------------------------- the index */
-  plateBtns.forEach((b) => {
-    const i = Number(b.dataset.sbPlate);
-    on(b, 'click', () => { goTo(i); q('hero')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
-  });
-  function marks() {
-    const cur = turn ? turn.to : idx;
-    plateBtns.forEach((b) => b.setAttribute('aria-current', Number(b.dataset.sbPlate) === cur ? 'true' : 'false'));
-  }
-
-  /* ---------------------------------------------------------- the riffle */
   let riffle = null, riffleAt = 0, introOn = false;
   function endIntro() {
     introOn = false; wrap.classList.remove('intro', 'b2');
@@ -391,8 +329,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     riffleStep();
   }
 
-  /* React port: the original page was always on screen.  Here the riffle
-     waits until the book scrolls into view. */
   let inView = false, booted = false, introQueued = false;
   function maybeIntro() {
     if (booted && inView && !introQueued) { introQueued = true; later(startIntro, 220); }
@@ -403,7 +339,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
   }, { threshold: [0, 0.35, 0.7] });
   io.observe(wrap);
 
-  /* ------------------------------------------------------------- boot */
   (async function boot() {
     idx = 0;
     paint(); applyView();
@@ -419,7 +354,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     maybeIntro();
   })();
 
-  /* React port: undo everything so a remount (or React StrictMode) starts clean */
   return () => {
     disposed = true;
     ac.abort();
@@ -431,7 +365,6 @@ export function mountSketchbook(root, { pages, land = 0 }) {
     capBox.textContent = '';
     wrap.classList.remove('intro', 'b2');
     for (const p of ['--tt', '--td', '--shade', '--rx', '--ry', '--zoom', '--bw']) sb3d.style.removeProperty(p);
-    plateBtns.forEach((b) => b.removeAttribute('aria-current'));
     delete root.dataset.ready;
   };
 }

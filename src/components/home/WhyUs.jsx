@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useReveal from "../../lib/useReveal.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// The lines grow out of the hero's navy at the top and sink back into it at the bottom, on an
-// eased ramp (not a straight one) so no band shows. The fades scale with the screen width.
 const EDGE_RAMP =
   "linear-gradient(to bottom, transparent, rgb(0 0 0 / .18) calc(var(--fade-top) * .35), rgb(0 0 0 / .62) calc(var(--fade-top) * .7), #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), rgb(0 0 0 / .62) calc(100% - var(--fade-bottom) * .7), rgb(0 0 0 / .18) calc(100% - var(--fade-bottom) * .35), transparent)";
 const EDGE_FADE = {
@@ -15,16 +14,16 @@ const EDGE_FADE = {
   WebkitMaskImage: EDGE_RAMP,
 };
 
-// Word-by-word scroll reveal: each word goes from dim to full ink as the paragraph scrolls in.
-// Background: Archi Hub gold contour lines (decorative), drifting slightly slower than the page.
+const TEXT =
+  "At Archi Hub, we build our own AI-powered desktop software to plan and design structures. We test and validate these tools on our own real-world projects, ensuring every output is backed by human engineering expertise.";
+const WORDS = TEXT.split(" ");
+
 export default function WhyUs() {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
   const textRef = useRef(null);
-
-  const text =
-    "At Archi Hub, a building starts long before the first drawing. We build our own desktop software to help engineers plan and design buildings, and we use it on our own projects.";
-  const words = text.split(" ");
+  const contentRef = useRef(null);
+  useReveal(contentRef);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -50,7 +49,6 @@ export default function WhyUs() {
         },
       );
 
-      // Parallax: the background moves a little slower than the content.
       if (bgRef.current) {
         gsap.fromTo(
           bgRef.current,
@@ -76,10 +74,8 @@ export default function WhyUs() {
     <section
       ref={sectionRef}
       aria-labelledby="why-us"
-      className="relative isolate overflow-hidden bg-ground py-20 md:py-44"
+      className="relative isolate overflow-hidden bg-ground mb-16 md:mb-28 py-20 md:py-44"
     >
-      {/* Decorative background (hidden from screen readers).
-          The image is colour-matched to --color-ground, so only a short fade is needed at the edges. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
@@ -95,19 +91,21 @@ export default function WhyUs() {
             ref={bgRef}
             src="/images/why-us-bg_1.webp"
             alt=""
-            width={1640}
-            height={624}
+            width={3840}
+            height={1461}
             loading="lazy"
             decoding="async"
             className="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-center"
           />
         </picture>
 
-        {/* Soft shade behind the paragraph so every word stays easy to read */}
         <div className="absolute inset-0 bg-[radial-gradient(90%_55%_at_50%_62%,color-mix(in_srgb,var(--color-ground)_55%,transparent),transparent)] md:bg-[radial-gradient(55%_70%_at_74%_50%,color-mix(in_srgb,var(--color-ground)_50%,transparent),transparent)]" />
       </div>
 
-      <div className="relative mx-auto grid max-w-[1280px] gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-16">
+      <div
+        ref={contentRef}
+        className="relative mx-auto grid max-w-[1280px] gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-16"
+      >
         <div>
           <h2
             id="why-us"
@@ -125,10 +123,10 @@ export default function WhyUs() {
           ref={textRef}
           className="max-w-[60ch] font-hero text-lg leading-relaxed text-ink"
         >
-          {words.map((word, i) => (
+          {WORDS.map((word, i) => (
             <span key={i} data-word>
               {word}
-              {i < words.length - 1 ? " " : ""}
+              {i < WORDS.length - 1 ? " " : ""}
             </span>
           ))}
         </p>
